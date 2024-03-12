@@ -17,11 +17,10 @@ namespace DapperWebApi.Repositories
         public async Task<IEnumerable<Empresa>> GetAll()
         {
             var query = "SELECT * FROM Empresas";
-            using (var connection = _context.CreateConnection())
-            {
-                var empresas = await connection.QueryAsync<Empresa>(query);
-                return empresas.ToList();
-            }
+            using var connection = _context.CreateConnection();
+            var empresas = await connection.QueryAsync<Empresa>(query);
+
+            return empresas.ToList();
         }
     }
 }
