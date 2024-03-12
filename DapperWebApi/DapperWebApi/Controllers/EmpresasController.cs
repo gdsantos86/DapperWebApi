@@ -22,10 +22,25 @@ namespace DapperWebApi.Controllers
             try
             {
                 var empresas = await _empresaRepository.GetAll();
-
-                if (empresas == null) { return NotFound(); }
+                if (empresas == null) return NotFound(); 
 
                 return Ok(empresas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetEmpresa(int id)
+        {
+            try
+            {
+                var empresa = await _empresaRepository.GetById(id);
+                if (empresa == null) return NotFound();
+
+                return Ok(empresa);
             }
             catch (Exception ex)
             {

@@ -22,5 +22,14 @@ namespace DapperWebApi.Repositories
 
             return funcionarios.ToList();
         }
+
+        public async Task<Funcionario> GetById(int id)
+        {
+            var query = "SELECT * FROM Funcionarios WHERE Id = @Id";
+            using var connection = _context.CreateConnection();
+            var funcionario = await connection.QuerySingleOrDefaultAsync<Funcionario>(query, new { id });
+
+            return funcionario;
+        }
     }
 }
